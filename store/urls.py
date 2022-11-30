@@ -1,5 +1,9 @@
 from django.urls import path
 from . import views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.urls import include, path
+from django.views.generic.base import RedirectView
+from django.conf import settings
 
 from django.views.generic import TemplateView
 from django_filters.views import FilterView
@@ -18,7 +22,7 @@ urlpatterns = [
     path ('update_item/', views.updateItem, name = 'update_item'),
     path ('product/<str:pk>', views.product_page, name = 'product'),
     path ('drug_class/<str:pk>', views.drug_class, name='drug_class'),
-    
+    path ("favicon.ico",RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),),
     path('search/', views.search, name='search'),
     path ('process_order/', views.processOrder,name ='process_order'),
 ]
