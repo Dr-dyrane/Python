@@ -1,0 +1,102 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div id="check_box" style="" class="box-element">
+            <a class="btn btn-outline-light" href="{% url 'store' %}">
+                <i class="bi bi-caret-left-fill"></i> Continue Shopping
+            </a>
+            <br>
+            <br>
+            <table  class="table text-center">
+                <tr>
+                    <th>
+                        <h5 class="btn btn-outline-light">Items: <strong>{{order.get_cart_items}}</strong></h5>
+                    </th>
+                    <th>
+                        <h5 class="btn btn-outline-light" style="">Total:<strong> ₦{{order.get_cart_total|floatformat:2}}</strong></h5>
+                    </th>
+
+                </tr>
+            </table>
+            <div><a style=" margin:5px;" class="btn btn-success btn-block" href="{% url 'checkout' %}">Checkout</a>
+            </div>
+        </div>
+        <br>
+        <div class="box-element cart-container">
+            <div class="cart-row" align="left">
+                <div style="flex:1.8">
+                    <strong>Item</strong>
+                </div>
+                <div style="flex:.9">
+                    <strong>Price</strong>
+                </div>
+                <div align="center" style="flex:1.2">
+                    <strong>Quantity</strong>
+                </div>
+                <div align="right" style="flex:.9">
+                    <strong>Total</strong>
+                </div>
+            </div>
+
+            {% for item in items %}
+            <div align="left" class="cart-row">
+                <div style="flex:1.8">
+                    <p>
+                        {{item.product.name}}
+                    </p>
+                    <img class="row-image" src="{{item.product.imageURL}}">
+                </div>
+                <div style="flex:.9">
+                    <p>
+                        <small>
+                            ₦{{item.product.price|floatformat:2}}
+                        </small>
+                    </p>
+                </div>
+                <div class="text-center" style="flex:1.2;padding:1.5px;display:flex">
+
+
+                    <div style="flex:30%" class="quantity">
+                        <button style="
+
+                            border-radius:7px 0px 0px 7px"
+                            data-product="{{item.product.id}}"
+                            data-action="remove"
+                            class="btn btn-dark btn-sm remove-btn update-cart ">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+
+                    <div style="flex:30%"class="quantity">
+                        <small>{{item.quantity}}</small>
+                    </div>
+
+                    <div style="flex:30%;"class="quantity">
+                        <button style="
+
+                            border-radius:0px 7px 7px 0px"
+                            data-product="{{item.product.id}}"
+                            data-action="add"
+                            class="btn btn-dark btn-sm add-btn update-cart">
+                            <i style=""class="bi bi-plus"></i>
+                        </button>
+                    </div>
+
+                </div>
+                <div align="right" style="flex:.9">
+                    <p>
+                        <small><i>
+                            ₦{{item.get_total|floatformat:2}}
+                        </i></small>
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+<nav id="drug_class_nav" style="" class="navbar sticky-top">
+
+    <div style="padding-top:12.5px;text-transform:capitalize;">
+        <h4>
+            <strong>
+                {{category.name}}
+            </strong>
+        </h4>
+    </div>
+</nav>
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <div></br>
+                <h5><strong>Indications</strong></h5>
+                <p>{{category.indication}}</p>
+            </div>
+            <hr>
+            <div style="display:flex; overflow:hidden;" class="box-element" id="form-wrapper">
+                <div>
+                    {% for product in product %}
+                    <div id="product_filter_list" style="" class="text-left">
+
+                        <div style="flex:5%">
+                            <img class="header-image" src="{{product.imageURL}}">
+                        </div>
+                        <div class="text-left" style="flex:3
+                            45%;padding:10px 0px 0px 10px;">
+                            <h6>
+                                <strong>{{ product.name }}</strong>
+                            </h6>
+
+                           
+                            <button data-product={{product.id}} data-action="add" class="btn btn-dark add-btn update-cart btn-sm">
+                                <i class="bi bi-bag-plus"></i>
+                            </button>
+                            <button data-product={{product.id}} data-action="remove" class="btn btn-dark remove-btn update-cart btn-sm">
+                                <i class="bi bi-bag-dash"></i>
+                            </button>
+                            <a class="btn btn-primary btn-sm" href="{% url 'product' product.id %}">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
+                        </div>
+
+                        <div class="text-left" style="flex:25%;padding:10px 0px 0px 0px;">
+                            {{ product.form }}
+                        </div>
+
+                        <div style="flex:25%;padding:10px 0px 0px 0px;">
+                            <small><i>₦{{ product.price }}</i></small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

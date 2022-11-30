@@ -1,0 +1,120 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row" style="">
+
+    <div style="position:relative;
+        text-align:left;" class="col-lg-4">
+        <img class="thumbnail" src="{{product.imageURL}}" alt="{{product.name}}" style="
+        border-radius:20px 20px 0px 0px">
+        <div style="
+            position:absolute;
+            right:25px;
+            padding: 2.5px 7.5px 2.5px 7.5px;
+            top:10px;
+            color:
+            {% if product.color < '#808080' %}
+            white
+            {% endif %};
+            background:{{product.color}};
+            border: 1px solid;
+            border-radius:15px;">
+            Other brands
+        </div>
+        <div style="
+            position:absolute;
+            left:25px;
+            padding: 2.5px 7.5px 2.5px 7.5px;
+            top:175px;
+            color:
+            {% if product.color < '#808080' %}
+            white
+            {% endif %};
+            background:{{product.color}};
+            border: 1px solid;
+            border-radius:15px;">
+              <small><i>₦{{product.price|floatformat:2}}</i></small>
+        </div>
+        <div style="
+            position:absolute;
+            right:25px;
+            top:175px;">
+            <a id="heart" class="btn btn-danger btn-sm" style="display:none" href="#">
+                <i class="bi bi-heart-fill"></i>
+            </a>
+
+            <a id="ace" class="btn btn-danger btn-sm" href="#">
+                <i class="bi bi-heart"></i>
+            </a>
+        </div>
+        <div class="back" style="
+            position: absolute;
+            left: 25px;
+            top:10px;">
+            <a href="{% url 'store' %}">
+                <i style="color:
+                    {% if product.color < '#808080' %}
+                    white
+                    {% endif %};"class="bi bi-caret-left-fill"></i>
+            </a>
+        </div>
+        <div>
+            <div style="display:flex; border-radius:0px 0px 20px 20px"class="box-element">
+                <div style="flex:0.5">
+                    <img class="header-image" src="{{product.imageURL}}">
+                </div>
+                <div class="text-left" style="flex:3;
+                    padding: 10px 5px 2.5px 5px;">
+                    <h5>
+                        <strong>{{product.name}}</strong>
+                        <small>{{product.dosage}}</small>
+                        <small><i>{{product.form}}</i></small>
+                    </h5>
+                    <p>
+                        <strong>Indications</strong></br>
+                            {{product.indication}}
+                    </p>
+                    <p>
+                        <strong>Prescription</strong></br>
+                            {{product.prescription}}
+                    </p>
+                    <p>
+                        <strong>Quantity</strong></br>
+                            Go to Cart
+                    </p>
+                  
+                </div>
+            </div><hr>
+        </div>
+        <div style="">
+            <div style="background:{{product.color}};
+                        margin:0px 0px 0px 0px;
+                        border-radius:25px;
+                        padding: 10px 10px 10px 10px;
+                        flex:1">
+                <button data-product={{product.id}} data-action="add" class="btn btn-outline add-btn update-cart product-page-btn text-center btn-block"
+                    style="
+                            margin:0px 0px 0px 0px;
+                            padding:0px 5px 0px 0px;
+                            background:none;
+                            color:{% if product.color < '#808080' %}
+                                    white
+                                  {% endif %};
+                            border:none;">
+                    Add to cart
+                </button>
+            </div><hr>
+            <div style="flex:1">
+                <a style="
+                        margin:0px 0px 0px 0px;
+                        border-radius:25px;
+                        padding: 10px 10px 10px 10px;"
+                        class="btn btn-success btn-block"
+                        href="{% url 'checkout' %}">Checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

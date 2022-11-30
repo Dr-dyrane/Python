@@ -1,0 +1,87 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<nav id="drug_class_nav" style="" class="navbar sticky-top">
+
+    {% for category in category %}
+    <div id="drug_class">
+        <a href="{% url 'drug_class' category.id %}">
+            {{category.name}}
+        </a>
+    </div>
+    {% endfor %}
+</nav>
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form method="get">
+                <div class="well">
+                    <h5 style="margin-top: 0">
+                        <strong><i class="bi bi-filter"></i>&nbsp;Filter</strong>
+                    </h5>
+                    <div class="row">
+                        <div class="form-group col-sm-4 col-md-3">
+                            {{ filter.form.name.label_tag }}
+                            {% render_field filter.form.name class="form-control" %}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-3">
+                            {{ filter.form.drug_class.label_tag }}
+                            {% render_field filter.form.drug_class class="form-control" %}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-3">
+                            {{ filter.form.price.label_tag }}
+                            {% render_field filter.form.price class="form-control" %}
+                        </div>
+
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark btn-block">
+                    Search
+                </button>
+            </form>
+            <hr>
+            <div style="display:flex; overflow:hidden;" class="box-element" id="form-wrapper">
+                <div>
+                    {% for product in filter.qs %}
+
+                    <div id="product_filter_list" style="margin: 25px 0px 0px 0px" class="text-left">
+
+                        <div style="flex:5%">
+                            <img class="header-image" src="{{product.imageURL}}">
+                        </div>
+                        <div class="text-left" style="flex:3
+                            45%;padding:10px 0px 0px 10px;">
+                            <h6>
+                                <strong>{{ product.name }}</strong>
+                            </h6>
+
+                            <button data-product={{product.id}} data-action="add" class="btn btn-dark add-btn update-cart btn-sm">
+                                <i class="bi bi-bag-plus"></i>
+                            </button>
+                            <button data-product={{product.id}} data-action="remove" class="btn btn-dark remove-btn update-cart btn-sm">
+                                <i class="bi bi-bag-dash"></i>
+                            </button>
+                            <a class="btn btn-primary btn-sm" href="{% url 'product' product.id %}">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            
+                        </div>
+                        <div class="text-left" style="flex:25%;padding:10px 0px 0px 0px;">
+                            {{product.form}}
+                        </div>
+                        <div style="flex:25%;padding:10px 0px 0px 0px;">
+                            <small><i>₦{{ product.price }}</i></small>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

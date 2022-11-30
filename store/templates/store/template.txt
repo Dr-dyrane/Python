@@ -1,0 +1,131 @@
+        <div class="input-group" style="
+            width: 225px;">
+            <input id="search" style="background:black;
+            border:none;" type="search" class="form-control" placeholder="" aria-label="search drug" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button style="border:none;" class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        
+        
+        linear-gradient(to right bottom,rgba(255, 165, 0,0.25),40%,rgba(228, 246, 232,0.25));
+        
+        
+        
+        <div style="flex:1;">
+            <a class="navbar-brand" href="{% url 'store' %}"><span style="
+                text-decoration:overline 4px #1F75Fe;
+                color: #f22b0c;
+                font-weight: 1000;
+                font-size:25px;">all</span><span style="
+                text-decoration:underline 4px orange;
+                color: green;
+                font-size:25px;
+                font-weight:1000;
+                ">Drugs</span></a>
+        </div>
+        
+        
+        
+<div id="lightsOut" class="btn-toggle" 
+        style="flex:1;
+                display:none;">
+            <a class="text-center" style="
+                padding:20px 15px 20px 15px;
+                margin: 2.5px;
+                font-weight:1000px;
+                font-size: 24px;
+                color:black;
+                flex:1;">
+                <i class="bi bi-lightbulb-off"></i>
+            </a>
+        </div>
+
+        <div id="lights" style="flex:1;
+                                display:none;" class="btn-toggle">
+            <a class="text-center" style="
+                padding:20px 15px 20px 15px;
+                margin: 2.5px;
+                font-weight:1000px;
+                font-size: 24px;
+                color:black;
+                flex:1;">
+                <i class="bi bi-lightbulb"></i>
+            </a>
+        </div>
+        
+        
+        
+       /*function updateTheme(theme) {
+            var url = "{% 'update_theme' %}"
+            fetch(url,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({
+                        'theme': theme
+                    })
+                })
+        }*/
+
+        
+        
+        
+
+def userThemeSettings(request):
+    
+    user, created = User.objects.get_or_create(id=1)
+    setting = user.ThemeSetting
+    
+    serializer = UserSerializer(setting, many=False)
+    return JsonResponse (serializer.data, safe= False)
+
+	
+	
+def updateTheme(request):
+    
+    data = json.loads(request.body)
+    theme = data['theme']
+    
+    user, created = User.objects.get_or_create(id=1)
+    user.TheneSetting.value = theme
+    user.ThemeSetting.save()
+    print('Request:', theme)
+    return JsonResponse('Updated..', safe=False)
+    
+    
+    
+    
+        
+    path ('user_theme_settings', views.userThemeSettings, name='user_theme_settings'),
+    path ('update_theme/', views.updateTheme, name = 'update_theme'),
+    
+    
+    
+    function loadThemeSettings() {
+
+            var url = "{% url 'user_theme_settings' %}"
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((response)=> response.json())
+            .then(function(data) {
+
+                console.Log('Data:', data)
+
+                var theme = data.value;
+                if (theme == 'light.css' || null) {
+                    swapStyles('main.css')
+                } else if (theme == 'main_dark.css') {
+                    swapStyles('main_dark.css')
+                }
+            })
+        }
+
+        loadThemeSettings()

@@ -1,0 +1,32 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="box-element" align="center"
+    style="margin:15px 0px 15px 0px;
+    border-radius:25px;
+    padding:15px;">
+    <form class="log"method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <h4><strong>REGISTER</strong></h4>
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password1" placeholder="Enter Password" />
+        <input type="password" name="password2" placeholder="Confirm Password" />
+        <input class="btn btn-primary" type="submit" value="Register" />
+        <p>
+            Already have an account?
+            <a href="{% url 'login' %}" class="">Login</a>
+        </p>
+
+        {% if error %}
+        <p style="color:red">
+            {{ error }}
+        </p>
+        {% endif %}
+
+    </form>
+</div>
+
+{% endblock content %}

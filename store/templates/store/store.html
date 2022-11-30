@@ -1,0 +1,57 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+
+
+<nav id="drug_class_nav" style="" class="navbar sticky-top">
+
+    {% for category in category %}
+    <div id="drug_class">
+        <a href="{% url 'drug_class' category.id %}">
+            {{category.name}}
+        </a>
+    </div>
+    {% endfor %}
+</nav>
+<div class="row" style="display:flex; justify-content: space-between;">
+    {% for product in products %}
+    <div id="cart-product" style="" class="col-lg-4">
+        <img style="border-radius: 20px 20px 0px 0px; margin-top:14px" class="thumbnail" src="{{product.imageURL}}" alt="{{product.name}}">
+        <div align="center" class="box-element store" style="overflow:auto; border-radius:0px 0px 20px 20px">
+            <div style="display:flex" align="center">
+                <h6 style="flex:1.5" class="text-left">
+                    <a href="{% url 'product' product.id %}">
+                        <strong>{{product.name}}</strong>
+                    </a>
+                </h6>
+
+                <h6 class="text-right" style="flex:0.5">
+                    <small>
+                        <i>₦{{product.price|floatformat:2}}</i>
+                    </small>
+                </h6>
+            </div>
+            <div style="border: 1px solid black; border-radius:20px; padding:7.5px 6px 7.5px 6px;background:black">
+                <button data-product={{product.id}} data-action="add" class="btn btn-dark add-btn update-cart btn-sm">
+                    <i class="bi bi-bag-plus"></i>
+                </button>
+                <button data-product={{product.id}} data-action="remove" class="btn btn-dark remove-btn update-cart btn-sm">
+                    <i class="bi bi-bag-dash"></i>
+                </button>
+                <a class="btn btn-primary btn-sm" href="{% url 'product' product.id %}">
+                    <i class="bi bi-eye"></i>
+                </a>
+                <a id="heart" class="btn btn-danger btn-sm" style="display:none" href="#">
+                    <i class="bi bi-heart"></i>
+                </a>
+
+                <a id="ace" class="btn btn-danger btn-sm" href="#">
+                    <i class="bi bi-heart"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
