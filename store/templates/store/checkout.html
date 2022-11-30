@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="box-element" id="form-wrapper">
-            <form method="post"id="form">
+            <form method="post"id="form" action="{% url 'checkout' %}">
                 {% csrf_token %}
                 <div id="user-info">
                     <div class="form-field">
@@ -39,7 +39,7 @@
                 </div>
 
                 <hr>
-                <input id="form-button" class="btn btn-primary btn-block" type="submit" value="Submit">
+                <input id="form-button" class="btn btn-primary btn-block" type="submit" value="Submit" action="{% url 'checkout' %}">
             </form>
         </div>
         <br>

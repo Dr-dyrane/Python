@@ -58,9 +58,11 @@ def account(request):
 	items = data['items']
 	
 	user = request.user.customer
-	ship = ShippingAddress.objects.get(customer= user, order = order)
+	try:
+	    ship = ShippingAddress.objects.get(customer= user, order = order)
+	except ShippingAddress.DoesNotExist:
+	    ship = None
 	
-
 	context = {'items':items, 'user':user, 'order':order, 'cartItems':cartItems, 'ship':ship }
 	return render(request, 'store/account.html', context)
 
@@ -167,19 +169,27 @@ def processOrder(request):
 	order.save()   
 	
 	if order.shipping == True:
-		ShippingAddress.objects.create(
-		        customer=customer,
-		        order=order,
-		        address=data['shipping']['address'],
-		        city=data['shipping']['city'],
-		        state=data['shipping']['state'],
-		        zipcode=data['shipping']['zipcode'],
-		    )
+	    if request.method == "POST":
+	    
+    		ShippingAddress.objects.create(
+    		        customer=customer,
+    		        order=order,
+    		        address= request.POST['address'],
+    		        city=data['shipping']['city'],
+    		        state=data['shipping']['state'],
+    		        zipcode=data['shipping']['zipcode'],
+    		    )
 		        
 	return JsonResponse('Payment submitted..', safe=False)
 	
 	
 def register(request):
+    
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+    
     if request.method == "POST":
         try:
             if request.POST['password1'] == request.POST['password2']:
@@ -188,6 +198,8 @@ def register(request):
                     return render (request,'store/register.html', {'error':'Username is already taken!'})
                 except User.DoesNotExist:
                     user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
+                    customer=Customer.objects.create(user=user, name = request.POST['username'])
+                    ShippingAddress.objects.create(customer=customer,order=order)
                     auth.login(request,user)
                     return redirect('store')
             else:
