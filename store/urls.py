@@ -13,6 +13,9 @@ urlpatterns = [
     path ('', views.store, name = "store"),
     path ('cart/', views.cart, name = "cart"),
     path ('account/', views.account, name = "account"),
+    
+    path ('edit_account/', views.edit_account, name = "edit_account"),
+    
     path ('guest_account/', views.guest_account, name = "guest_account"),
     path ('checkout/', views.checkout, name = "checkout"),
     path ('login/', views.login, name = "login"),

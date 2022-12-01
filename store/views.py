@@ -181,6 +181,29 @@ def processOrder(request):
     		    )
 		        
 	return JsonResponse('Payment submitted..', safe=False)
+
+def edit_account(request):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	
+	user = request.user.customer
+	try:
+	    ship = ShippingAddress.objects.get(customer= user, order = order)
+	except ShippingAddress.DoesNotExist:
+	    ship = None
+	if request.method == "POST":
+	    customer = Customer.objects.create(name=request.POST['name'],email=request.POST['email'], phone=request.POST['phone'])
+	    try:
+	        ship = ShippingAddress.objects.get_or_create(customer= user, order = order, address=request.POST['address'], city=request.POST['city'])
+	    except ShippingAddress.DoesNotExist:
+	        ship = None
+	    
+
+	
+	context = {'items':items, 'user':user, 'order':order, 'cartItems':cartItems, 'ship':ship }
+	return render(request, 'store/edit_account.html', context)
 	
 	
 def register(request):
@@ -225,5 +248,6 @@ def login(request):
 
 def logout(request):
     if request.method == 'POST':
-        auth.logout(request)
+        user = request.user
+        auth.logout(request,user)
     return redirect('store')

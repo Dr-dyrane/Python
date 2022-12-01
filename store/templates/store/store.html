@@ -3,7 +3,7 @@
 {% block content %}
 
 
-<nav id="drug_class_nav" style="" class="navbar sticky-top">
+<nav id="drug_class_nav" style="overflow:auto" class="navbar sticky-top">
 
     {% for category in category %}
     <div id="drug_class">
@@ -13,7 +13,7 @@
     </div>
     {% endfor %}
 </nav>
-<div class="row" style="display:flex; justify-content: space-between;">
+<div class="row" style="display:flex; justify-content: space-between;overflow:auto">
     {% for product in products %}
     <div id="cart-product" style="" class="col-lg-4">
         <img style="border-radius: 20px 20px 0px 0px; margin-top:14px" class="thumbnail" src="{{product.imageURL}}" alt="{{product.name}}">
