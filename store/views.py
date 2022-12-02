@@ -1,4 +1,7 @@
 from django.shortcuts import render,redirect
+from django.http import HttpResponse, HttpResponseRedirect
+
+from django.urls import reverse
 from django.http import JsonResponse
 import json
 import datetime
@@ -182,29 +185,56 @@ def processOrder(request):
 		        
 	return JsonResponse('Payment submitted..', safe=False)
 
-def edit_account(request):
+def edit_account(request,pk):
 	data = cartData(request)
 	cartItems = data['cartItems']
 	order = data['order']
 	items = data['items']
 	
 	user = request.user.customer
+	pk = user.id
 	try:
 	    ship = ShippingAddress.objects.get(customer= user, order = order)
 	except ShippingAddress.DoesNotExist:
 	    ship = None
-	if request.method == "POST":
-	    customer = Customer.objects.create(name=request.POST['name'],email=request.POST['email'], phone=request.POST['phone'])
-	    try:
-	        ship = ShippingAddress.objects.get_or_create(customer= user, order = order, address=request.POST['address'], city=request.POST['city'])
-	    except ShippingAddress.DoesNotExist:
-	        ship = None
-	    
-
 	
 	context = {'items':items, 'user':user, 'order':order, 'cartItems':cartItems, 'ship':ship }
-	return render(request, 'store/edit_account.html', context)
+	return render(request,'store/edit_account.html',context)
 	
+	
+def update_account(request,pk):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	
+	user = request.user.customer
+	user.id = pk
+	
+	name = request.POST['name']
+	email = request.POST['email']
+	phone = request.POST['phone']
+	
+	user.name = name
+	user.email = email
+	user.phone = phone
+	user.save()
+	
+	try:
+	    ship = ShippingAddress.objects.get(customer= user, order = order)
+	    address = request.POST['address']
+	    city = request.POST['city']
+	    ship.address = address
+	    ship.city = city
+	    ship.save()
+	except ShippingAddress.DoesNotExist:
+	    address = request.POST['address']
+	    city = request.POST['city']
+	    ship = ShippingAddress.objects.create (customer = user, order = order, address = address,city = city)
+	    ship.save()
+	
+	context = {'items':items, 'user':user, 'order':order, 'cartItems':cartItems, 'ship':ship }
+	return render(request,'store/edit_account.html',context)
 	
 def register(request):
     
@@ -222,9 +252,7 @@ def register(request):
                 except User.DoesNotExist:
                     user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
                     customer=Customer.objects.create(user=user, name = request.POST['username'])
-                    ShippingAddress.objects.create(customer=customer,order=order)
-                    auth.login(request,user)
-                    return redirect('store')
+                    return redirect('login')
             else:
                 error = {'error':'Password does not match!'}
                 return render (request,'store/register.html',error )
