@@ -21,7 +21,7 @@ urlpatterns = [
     path ('checkout/', views.checkout, name = "checkout"),
     path ('login/', views.login, name = "login"),
     path ('register/', views.register, name = "register"),
-    path ('logout/', views.logout, name = "logout"),
+    path ('logout/', views.logout_view, name = "logout"),
 
     path ('update_item/', views.updateItem, name = 'update_item'),
     path ('product/<str:pk>', views.product_page, name = 'product'),

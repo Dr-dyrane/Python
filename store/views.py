@@ -274,8 +274,7 @@ def login(request):
     else:
         return render(request,'store/login.html')
 
-def logout(request):
+def logout_view(request):
     if request.method == 'POST':
-        user = request.user
-        auth.logout(request,user)
+        auth.logout(request)
     return redirect('store')
