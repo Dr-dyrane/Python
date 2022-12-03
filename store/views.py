@@ -173,8 +173,8 @@ def processOrder(request):
 	
 	if order.shipping == True:
 	    if request.method == "POST":
-	    
-    		ShippingAddress.objects.create(
+	        
+	        ShippingAddress.objects.create(
     		        customer=customer,
     		        order=order,
     		        address= request.POST['address'],

@@ -4,14 +4,14 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="box-element" id="form-wrapper">
-            <form method="post"id="form" action="{% url 'checkout' %}">
+            <form class="edit-checkout" align="center"id="form">
                 {% csrf_token %}
                 <div id="user-info">
                     <div class="form-field">
-                        <input required class="form-control" type="text" name="name" placeholder="Name..">
+                        <input required class="form-control" type="text" name="name" placeholder="Name.."/>
                     </div>
                     <div class="form-field">
-                        <input required class="form-control" type="email" name="email" placeholder="Email..">
+                        <input required class="form-control" type="email" name="email" placeholder="Email.."/>
                     </div>
                 </div>
 
@@ -22,24 +22,24 @@
                     </p>
                     <hr>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="address" placeholder="Street Address..">
+                        <input class="form-control" type="text" name="address" placeholder="Street Address.."/>
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="city" placeholder="City..">
+                        <input class="form-control" type="text" name="city" placeholder="City.."/>
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="state" placeholder="State..">
+                        <input class="form-control" type="text" name="state" placeholder="State.."/>
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code.."/>
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                        <input class="form-control" type="text" name="country" placeholder="Zip code.."/>
                     </div>
                 </div>
 
                 <hr>
-                <input id="form-button" class="btn btn-primary btn-block" type="submit" value="Submit" formmethod="post"action="{% url 'checkout' %}">
+                <input style="background:#30C5FF;color:white;border:none" id="form-button" class="btn btn-primary btn-block" type="submit" value="Submit"/>
             </form>
         </div>
         <br>
@@ -145,6 +145,9 @@
 <script type="text/javascript">
 
     var shipping = '{{order.shipping}}'
+    var total = '{{order.get_cart_total|floatformat:2}}'
+    
+    
     if (shipping == 'False') {
         document.getElementById('shipping-info').innerHTML = ''
     }
