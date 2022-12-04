@@ -11,7 +11,6 @@
         <div class="category" style="
             position:absolute;
             right:25px;
-            
             top:10px;
             color:
             {% if product.color < '#808080' %}
@@ -27,7 +26,7 @@
                 background:{{product.color}};
                 border: 1px solid;
                 border-radius:15px;
-                padding: 1px 7px 1px 7px;" href="{% url 'drug_class' category.id %}">
+                padding: 1.5px 7px 1.5px 7px;" href="{% url 'drug_class' category.id %}">
                 {{category.name}}
             </a><br>
             {% endfor %}

@@ -6,6 +6,7 @@ from django.http import JsonResponse
 import json
 import datetime
 from .models import * 
+from django.db.models import F
 
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -37,8 +38,9 @@ def product_page(request, pk):
 	items = data['items']
 	
 	product = Product.objects.get(id=pk)
-	product.views = product.views + 1
+	product.views = F('views') + 1
 	product.save()
+	product.refresh_from_db()
 	
 	try:
 	    item = OrderItem.objects.get(product=product,order = order)
