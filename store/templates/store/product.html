@@ -90,7 +90,11 @@
             </p>
             <p>
                 <strong>Qty in cart</strong></br>
+                {% if request.user.is_authenticated %} 
                 {{ item.quantity|default:"0" }}
+                {% else %}
+                Go to cart
+                {% endif %}
         </p>
 
     </div>

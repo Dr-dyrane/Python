@@ -36,13 +36,15 @@ def product_page(request, pk):
 	order = data['order']
 	items = data['items']
 	
-	
 	product = Product.objects.get(id=pk)
+	
 	try:
 	    item = OrderItem.objects.get(product=product,order = order)
 	except OrderItem.DoesNotExist:
 	    item = None
-	
+	except TypeError:
+	    item = None
+	    
 	category = product.drug_class.all()
 	
 	context = {'item':item,'product':product, 'cartItems':cartItems , 'category':category,}
