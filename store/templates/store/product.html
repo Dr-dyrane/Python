@@ -22,11 +22,11 @@
             border-radius:15px;">
             {% for category in category %}
             <a style="color:
-            {% if product.color < '#808080' %}
-            white
-            {% else %}
-            black
-            {% endif %};" href="{% url 'drug_class' category.id %}">
+                {% if product.color < '#808080' %}
+                white
+                {% else %}
+                black
+                {% endif %};" href="{% url 'drug_class' category.id %}">
                 Other {{category.name}}
             </a>
             {% endfor %}
@@ -89,8 +89,8 @@
                 {{product.prescription}}
             </p>
             <p>
-                <strong>Quantity</strong></br>
-            Go to Cart
+                <strong>Qty in cart</strong></br>
+                {{ item.quantity|default:"0" }}
         </p>
 
     </div>

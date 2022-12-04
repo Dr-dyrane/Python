@@ -20,6 +20,7 @@ def store(request):
 	cartItems = data['cartItems']
 	order = data['order']
 	items = data['items']
+	
 	category = Category.objects.all()
 
 	products = Product.objects.all()    		    	
@@ -34,11 +35,17 @@ def product_page(request, pk):
 	cartItems = data['cartItems']
 	order = data['order']
 	items = data['items']
-
+	
+	
 	product = Product.objects.get(id=pk)
+	try:
+	    item = OrderItem.objects.get(product=product,order = order)
+	except OrderItem.DoesNotExist:
+	    item = None
+	
 	category = product.drug_class.all()
 	
-	context = {'items':items,'product':product, 'cartItems':cartItems , 'category':category,}
+	context = {'item':item,'product':product, 'cartItems':cartItems , 'category':category,}
 	return render(request, 'store/product.html', context)
 
 
