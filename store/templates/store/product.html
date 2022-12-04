@@ -11,24 +11,25 @@
         <div class="category" style="
             position:absolute;
             right:25px;
-            padding: 2.5px 7.5px 2.5px 7.5px;
+            
             top:10px;
             color:
             {% if product.color < '#808080' %}
             white
-            {% endif %};
-            background:{{product.color}};
-            border: 1px solid;
-            border-radius:15px;">
+            {% endif %};">
             {% for category in category %}
             <a style="color:
                 {% if product.color < '#808080' %}
                 white
                 {% else %}
                 black
-                {% endif %};" href="{% url 'drug_class' category.id %}">
-                Other {{category.name}}
-            </a>
+                {% endif %};
+                background:{{product.color}};
+                border: 1px solid;
+                border-radius:15px;
+                padding: 1px 7px 1px 7px;" href="{% url 'drug_class' category.id %}">
+                {{category.name}}
+            </a><br>
             {% endfor %}
         </div>
         <div style="
@@ -55,6 +56,16 @@
 
             <a id="ace" class="btn btn-danger btn-sm" href="#">
                 <i class="bi bi-heart"></i>
+            </a>
+        </div>
+        
+        <div style="
+            position:absolute;
+            right:65px;
+            top:175px;">
+            <a id="" class="btn btn-primary btn-sm" style="" href="#">
+                <i class="bi bi-eye"></i><br>
+                <small>{{product.views}}</small>
             </a>
         </div>
         <div class="back" style="

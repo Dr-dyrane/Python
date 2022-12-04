@@ -37,6 +37,8 @@ def product_page(request, pk):
 	items = data['items']
 	
 	product = Product.objects.get(id=pk)
+	product.views = product.views + 1
+	product.save()
 	
 	try:
 	    item = OrderItem.objects.get(product=product,order = order)

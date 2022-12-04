@@ -53,6 +53,7 @@ class Product(models.Model):
     indication = models.TextField (max_length=2000,blank=True, null=True,default="ailment")
     prescription = models.CharField(max_length=1000,blank=True,null=True,default="daily")
     color = ColorField(default='#FF0000',format="hexa", image_field="image")
+    views = models.IntegerField(default=0)
     
     
     
