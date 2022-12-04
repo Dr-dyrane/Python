@@ -49,13 +49,19 @@
             position:absolute;
             right:25px;
             top:175px;">
-            <a id="heart" class="btn btn-danger btn-sm" style="display:none" href="#">
-                <i class="bi bi-heart-fill"></i>
-            </a>
-
-            <a id="ace" class="btn btn-danger btn-sm" href="#">
-                <i class="bi bi-heart"></i>
-            </a>
+        <form action = "{% url 'like_product' %}"
+              method = "POST"
+              class = "like">
+            {% csrf_token %}
+            <input type ="hidden" name="product_id" value ="{{product.id}}">
+            
+            
+            <button id="heart" type="submit" class="btn btn-danger btn-sm" >
+                <i class="bi bi-heart-fill"></i><br>
+                <small>{{product.liked.all.count}}</small>
+            </button>
+         
+        </form>
         </div>
         
         <div style="

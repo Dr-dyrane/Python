@@ -9,6 +9,8 @@ from django.views.generic import TemplateView
 from django_filters.views import FilterView
 from .filters import ProductFilter
 
+
+
 urlpatterns = [
     path ('', views.store, name = "store"),
     path ('cart/', views.cart, name = "cart"),
@@ -24,6 +26,10 @@ urlpatterns = [
     path ('logout/', views.logout_view, name = "logout"),
 
     path ('update_item/', views.updateItem, name = 'update_item'),
+    
+    path ('like_product/', views.like_product, name = 'like_product'),
+    
+    
     path ('product/<str:pk>', views.product_page, name = 'product'),
     path ('drug_class/<str:pk>', views.drug_class, name='drug_class'),
     path ("favicon.ico",RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),),

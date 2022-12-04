@@ -28,8 +28,7 @@ def store(request):
 	context = {'products':products,'category':category, 'cartItems':cartItems}
 	return render(request, 'store/store.html', context)
 	
-	
-	
+
 def product_page(request, pk):
 	data = cartData(request)
 
@@ -53,6 +52,49 @@ def product_page(request, pk):
 	
 	context = {'item':item,'product':product, 'cartItems':cartItems , 'category':category,}
 	return render(request, 'store/product.html', context)
+
+
+
+def like_product(request):
+    
+    customer = request.user.customer
+    
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get (id = product_id)
+        
+        if customer in product.liked.all():
+            product.liked.remove(customer)
+        else:
+            product.liked.add(customer)
+        like, created = Like.objects.get_or_create(customer = customer, product_id = product_id)
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Unlike'
+            else:
+                like.value = 'Like'
+        like.save()
+        
+        
+        
+        data = cartData(request)
+        
+        cartItems = data['cartItems']
+        
+        order = data['order']
+        items = data['items']
+        
+        try:
+            item = OrderItem.objects.get(product=product,order = order)
+        except OrderItem.DoesNotExist:
+            item = None
+        except TypeError:
+            item = None
+            
+        category = product.drug_class.all()
+        context = {'item':item,'product':product, 'cartItems':cartItems , 'category':category,}
+    return render(request, 'store/product.html', context)
+
 
 
 def drug_class(request, pk):

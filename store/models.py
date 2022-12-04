@@ -54,6 +54,7 @@ class Product(models.Model):
     prescription = models.CharField(max_length=1000,blank=True,null=True,default="daily")
     color = ColorField(default='#FF0000',format="hexa", image_field="image")
     views = models.IntegerField(default=0)
+    liked = models.ManyToManyField(Customer, default=None, blank= True,  related_name = 'liked')
     
     
     
@@ -66,10 +67,27 @@ class Product(models.Model):
             url = self.image.url
         except:
             url=''
-        return url        
+        return url
+        
+    @property
+    def num_likes(self):
+        return self.liked.all().count()
 
 
+LIKE = (
+    ('Like','Like'),
+    ('Unlike','Unlike'),
+    )
 
+
+class Like (models.Model):
+    customer = models.ForeignKey (Customer,on_delete= models.CASCADE)
+    product = models.ForeignKey (Product, on_delete = models.CASCADE)
+    value = models.CharField (choices = LIKE, default = 'Like', max_length=10)
+    
+    
+    def __str__(self):
+        return str(self.product)
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
