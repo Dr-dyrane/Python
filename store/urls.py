@@ -28,7 +28,7 @@ urlpatterns = [
     path ('drug_class/<str:pk>', views.drug_class, name='drug_class'),
     path ("favicon.ico",RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),),
     path('search/', views.search, name='search'),
-    path ('process_order/', views.processOrder,name ='process_order'),
+    path ('checkout/process_order/', views.processOrder,name ='process_order'),
 ]
 
 

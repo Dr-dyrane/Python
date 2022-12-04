@@ -36,10 +36,25 @@ def product_page(request, pk):
 	items = data['items']
 
 	product = Product.objects.get(id=pk)
-	category = Category.objects.filter(name=product)
+	category = product.drug_class.all()
 	
 	context = {'items':items,'product':product, 'cartItems':cartItems , 'category':category,}
 	return render(request, 'store/product.html', context)
+
+
+def drug_class(request, pk):
+	data = cartData(request)
+
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	
+	category = Category.objects.get(id=pk)
+	product = Product.objects.filter(drug_class=category)
+	    
+	context = {'product':product,'category':category ,'cartItems':cartItems,}
+	return render(request, 'store/drug_class.html', context)
+
 
 
 def cart(request):
@@ -110,22 +125,6 @@ def search(request):
     product_filter = ProductFilter(request.GET, queryset=product)
     context = {'cartItems':cartItems,'filter': product_filter ,'product':product,'category':category }
     return render(request, 'store/search.html', context)
-
-
-def drug_class(request, pk):
-	data = cartData(request)
-
-	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
-	
-	category = Category.objects.get(id=pk)
-	product = Product.objects.filter(drug_class=category)
-	    
-	context = {'product':product,'category':category ,'cartItems':cartItems,}
-	return render(request, 'store/drug_class.html', context)
-
-
 
 
 def updateItem(request):

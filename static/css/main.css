@@ -48,7 +48,7 @@ hr{border:none;}
 
 
 
-#drug_class a:hover,.store h6 a:hover{
+#drug_class a:hover,.store h6 a:hover,.category a:hover{
     text-decoration: none;
 }
 
