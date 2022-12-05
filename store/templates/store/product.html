@@ -49,21 +49,28 @@
             position:absolute;
             right:25px;
             top:175px;">
-        <form action = "{% url 'like_product' %}"
-              method = "POST"
-              class = "like">
-            {% csrf_token %}
-            <input type ="hidden" name="product_id" value ="{{product.id}}">
-            
-            
-            <button id="heart" type="submit" class="btn btn-danger btn-sm" >
-                <i class="bi bi-heart-fill"></i><br>
-                <small>{{product.liked.all.count}}</small>
-            </button>
-         
-        </form>
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'like_product' %}"
+                method="POST"
+                class="like">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}">
+
+
+                <button id="heart" type="submit" class="btn btn-danger btn-sm">
+                    <i class="bi bi-heart-fill"></i><br>
+                    <small>{{product.liked.all.count}}</small>
+                </button>
+                {% else %}
+                <button id="heart" type="submit" class="btn btn-danger btn-sm">
+                    <i class="bi bi-heart-fill"></i><br>
+                    <small>{{product.liked.all.count}}</small>
+                </button>
+                {% endif %}
+
+            </form>
         </div>
-        
+
         <div style="
             position:absolute;
             right:65px;
@@ -106,11 +113,11 @@
             </p>
             <p>
                 <strong>Qty in cart</strong></br>
-                {% if request.user.is_authenticated %} 
-                {{ item.quantity|default:"0" }}
-                {% else %}
-                Go to cart
-                {% endif %}
+            {% if request.user.is_authenticated %}
+            {{ item.quantity|default:"0" }}
+            {% else %}
+            Go to cart
+            {% endif %}
         </p>
 
     </div>
