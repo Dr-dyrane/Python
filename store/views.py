@@ -271,8 +271,8 @@ def update_account(request,pk):
 	image = request.POST['image']
  
 	user.image = image
- 	user.name = name
-  	user.email = email
+	user.name = name
+	user.email = email
 	user.phone = phone
 	user.save()
 	
