@@ -9,11 +9,6 @@
 
             <form class="" method="POST" action="{% url 'update_account' user.id %}">
                 {% csrf_token %}
-
-                <img name="image"
-                style="width:100px; length:100px;border:2px solid;border-radius:50%; margin:15px" src="{{user.imageURL}}" />
-                <h5></h5>
-
                 <div class="back" style="
                     position: absolute;
                     left: 25px;
@@ -24,12 +19,23 @@
                 </div>
                 <div class="edit-header">
                     <section style="text-align:center;
-                    padding:3%;
-                    border:thin solid black;color:white">
-                        <label for ="input-image" style="cursor:pointer">
-                            Select Image<br>
-                            <i style="font-size:24px" class="bi bi-camera"></i>
-                            <input style="border:none;width:220px;display:none" type="file" id = "input-image" name="image"/><br>
+                        padding:3%;
+                        border:thin solid black;
+                        border-radius:20px">
+                        <label for="input-image" style="cursor:pointer">
+                            <img name="image"
+                            style="width:100px; length:100px;
+                                    border:2px solid;
+                                    border-radius:50%;
+                                    margin:15px" 
+                            src="{{user.imageURL}}" />
+                            <i style="font-size:24px;
+                                      color:white;
+                                      top:110px;
+                                      right: 40%;
+                                      position:absolute;
+                                      " class="bi bi-camera"></i>
+                            <input style="border:none;width:220px;display:none" type="file" id="input-image" name="image" /><br>
                             <span style="color:green"id="imageName"></span>
                         </label>
                     </section>
@@ -93,8 +99,8 @@
 <script>
     let input = document.getElementById("input-image");
     let imageName = document.getElementById("imageName")
-    
-    input.addEventListener("change", ()=>{
+
+    input.addEventListener("change", ()=> {
         let inputImage = document.querySelector("input[type=file]").files[0];
         imageName.innerText = inputImage.name;
     })
