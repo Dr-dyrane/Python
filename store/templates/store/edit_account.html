@@ -10,7 +10,7 @@
             <form class="" method="POST" action="{% url 'update_account' user.id %}">
                 {% csrf_token %}
 
-                <input type="image" name="image" value="{{user.image}}" disabled
+                <img name="image"
                 style="width:100px; length:100px;border:2px solid;border-radius:50%; margin:15px" src="{{user.imageURL}}" />
                 <h5></h5>
 
@@ -23,6 +23,10 @@
                     </a>
                 </div>
                 <div class="edit-header">
+                    <section>
+                        <input type="file" name="image"
+                        value="{{user.image}}" />
+                    </section>
                     <section>
                         <label style="color:white">Name</label>
                         <input type="text" name="name"

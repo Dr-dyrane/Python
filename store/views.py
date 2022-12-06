@@ -268,9 +268,11 @@ def update_account(request,pk):
 	name = request.POST['name']
 	email = request.POST['email']
 	phone = request.POST['phone']
-	
-	user.name = name
-	user.email = email
+	image = request.POST['image']
+ 
+	user.image = image
+ 	user.name = name
+  	user.email = email
 	user.phone = phone
 	user.save()
 	
