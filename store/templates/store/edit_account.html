@@ -23,8 +23,15 @@
                     </a>
                 </div>
                 <div class="edit-header">
-                    <section>
-                        <input style="border:none;width:220px" type="file" name="image"/>
+                    <section style="text-align:center;
+                    padding:3%;
+                    border:thin solid black;color:white">
+                        <label for ="input-image" style="cursor:pointer">
+                            Select Image<br>
+                            <i style="font-size:24px" class="bi bi-camera"></i>
+                            <input style="border:none;width:220px;display:none" type="file" id = "input-image" name="image"/><br>
+                            <span style="color:green"id="imageName"></span>
+                        </label>
                     </section>
                     <section>
                         <label style="color:white">Name</label>
@@ -83,4 +90,13 @@
 
     </div>
 </div>
+<script>
+    let input = document.getElementById("input-image");
+    let imageName = document.getElementById("imageName")
+    
+    input.addEventListener("change", ()=>{
+        let inputImage = document.querySelector("input[type=file]").files[0];
+        imageName.innerText = inputImage.name;
+    })
+</script>
 {% endblock content %}
